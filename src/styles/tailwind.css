@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+@import './typography.css' layer(components);
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --text-2xs: 0.6875rem;
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-mona-sans);
+
+  --color-custom-teal: hsl(176, 74%, 39%);
+  --color-custom-blue: hsl(220, 60%, 15%);
+}
+
+.tartle-datavault-connect-button {
+  margin: 0 auto;
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(170, 72%, 47%);
+  color: hsl(180, 100%, 12%);
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  transition:
+    background-color 0.2s ease-in-out,
+    scale 0.15s ease-in-out;
+}
+
+.tartle-datavault-connect-button:hover {
+  text-decoration: none;
+  background-color: hsla(170, 72%, 42%);
+}
+
+.tartle-datavault-connect-button span {
+  margin-left: 0.5rem;
+}
+
+.tartle-datavault-connect-button .logo-container {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.tartle-datavault-connect-button .logo-container svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: hsl(180, 100%, 12%);
+  grid-row-start: 1;
+  grid-column-start: 1;
+}
+
+.tartle-datavault-connect-button:hover .tartle-logo {
+  opacity: 0;
+  rotate: 180deg;
+  animation: pulse 0.3s ease-in-out;
+}
+
+.tartle-datavault-connect-button:hover .logo-cube {
+  opacity: 1;
+  rotate: 360deg;
+  animation: pulse 0.3s ease-in-out;
+}
+
+.tartle-logo,
+.logo-cube {
+  transition:
+    opacity 0.3s ease-in-out,
+    rotate 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86),
+    scale 0.3s ease-in-out;
+}
+.tartle-logo {
+  opacity: 1;
+  rotate: 0deg;
+}
+.logo-cube {
+  opacity: 0;
+  rotate: 180deg;
+}
+
+.tartle-datavault-connect-button:active {
+  scale: 0.95;
+}
+
+.tartle-datavault-connect-button:active .logo-cube {
+  scale: 0.35;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.7);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
