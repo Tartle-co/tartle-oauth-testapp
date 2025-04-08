@@ -1,24 +1,27 @@
 import { NextResponse } from 'next/server'
-import { getId } from '@/utils/fingerprint'
-import { getConfig, setConfigValues } from '@/actions/actions'
+import { getTartleAppConfig, saveTartleAppConfig } from '@/actions/actions'
+import { cookies } from 'next/headers'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const authorizationCode = searchParams.get('code')
   const endpointUri = process.env.NEXT_PUBLIC_TARTLE_API_URI + '/oauth/token'
 
-  const config = await getConfig()
+  const cookieStore = await cookies()
+  const config = await getTartleAppConfig()
+  const codeVerifier = cookieStore.get('code_verifier')?.value
+  const state = cookieStore.get('state')?.value
 
-  console.log({ config, searchParams })
+  console.log({ config, searchParams, codeVerifier, state })
 
   const params = {
     code: authorizationCode,
     grant_type: 'authorization_code',
-    code_verifier: config.code_verifier,
+    code_verifier: codeVerifier,
     client_secret: config.client_secret,
     client_id: config.client_id,
     redirect_uri: process.env.NEXT_PUBLIC_TARTLE_REDIRECT_URI,
-    state: 'boo',
+    state: state,
   }
 
   const response = await fetch(endpointUri, {
@@ -41,7 +44,7 @@ export async function GET(request: Request) {
     let data
     try {
       data = await response.json()
-      await setConfigValues({
+      await saveTartleAppConfig({
         token: data.access_token,
         refresh_token: data.refresh_token,
       })

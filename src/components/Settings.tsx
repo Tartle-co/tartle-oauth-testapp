@@ -4,7 +4,7 @@ import { updateSettings } from '@/actions/formActions'
 import { useActionState } from 'react'
 import * as React from 'react'
 import { useRouter } from 'next/navigation'
-import { setConfigValues } from '@/actions/actions'
+import { saveTartleAppConfig } from '@/actions/actions'
 
 export default function Settings({
   setIsOpen,
@@ -20,7 +20,7 @@ export default function Settings({
   const [reloadMessage, setReloadMessage] = React.useState(false)
 
   const handleReset = async () => {
-    await setConfigValues({})
+    await saveTartleAppConfig({})
     window.location.href = '/'
   }
 

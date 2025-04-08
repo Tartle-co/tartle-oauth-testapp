@@ -3,13 +3,13 @@
 import { useState } from 'react'
 import { CogIcon } from '@heroicons/react/24/outline'
 import Settings from './Settings'
-import { setConfigValues } from '@/actions/actions'
+import { saveTartleAppConfig } from '@/actions/actions'
 
 export function Toolbar({ clientId }: { clientId: string }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleReset = async () => {
-    await setConfigValues({})
+    await saveTartleAppConfig({})
     window.location.href = '/tartle/oauth/connect'
   }
 
