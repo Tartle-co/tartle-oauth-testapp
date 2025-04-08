@@ -1,11 +1,10 @@
 'use server'
 import { saveTartleAppConfig, getTartleAppConfig } from './actions'
-import { setCookie } from 'cookies-next/server'
-
+import { cookies } from 'next/headers'
 // Push data to a tartle packet on behalf of a user
 export const pushSellersPacket = async (data: any, packetId: string) => {
   const config = await getTartleAppConfig()
-
+  const cookieStore = await cookies()
   if (!config.token) {
     throw new Error('No token saved')
   }
@@ -36,7 +35,7 @@ export const pushSellersPacket = async (data: any, packetId: string) => {
     )
   }
 
-  setCookie('packet_id', packetId, {
+  cookieStore.set('packet_id', packetId, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     // no expiration
