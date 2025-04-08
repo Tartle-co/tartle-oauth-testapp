@@ -8,7 +8,7 @@ import { IntroFooter } from '@/components/Intro'
 import { Toolbar } from '@/components/Toolbar'
 import { Intro } from '@/components/Intro'
 import { FixedSidebar } from '@/components/FixedSidebar'
-import { getConfig } from '@/actions/actions'
+import { getTartleAppConfig } from '@/actions/actions'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -33,7 +33,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const config = await getConfig()
+  const config = await getTartleAppConfig()
   const isReset = Boolean(config.client_id)
 
   return (

@@ -1,24 +1,7 @@
-const DataVaultConnectButton = ({
-  clientId,
-  codeChallenge,
-}: {
-  clientId: string
-  codeChallenge: string
-}) => (
-  <a
-    className="tartle-datavault-connect-button"
-    href={new URL(
-      `/oauth/authorize?${new URLSearchParams({
-        client_id: clientId,
-        response_type: 'code',
-        redirect_uri: process.env.NEXT_PUBLIC_TARTLE_REDIRECT_URI as string,
-        code_challenge: codeChallenge,
-        code_challenge_method: 'S256',
-        scope: 'write',
-      })}`,
-      process.env.NEXT_PUBLIC_TARTLE_API_URI,
-    ).toString()}
-  >
+import { useDataVaultButton } from './useDataVaultButton'
+
+const DataVaultConnectButton = ({ url }: { url: string }) => (
+  <a className="tartle-datavault-connect-button" href={url}>
     <div className="logo-container">
       <svg
         viewBox="0 0 35 40"

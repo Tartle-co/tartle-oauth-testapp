@@ -1,20 +1,21 @@
 'use server'
-import { getConfig, setConfigValues } from './actions'
+import { saveTartleAppConfig, getTartleAppConfig } from './actions'
+import { setCookie } from 'cookies-next/server'
 
 // Push data to a tartle packet on behalf of a user
-export const pushSellersPacket = async (
-  token: string,
-  data: any,
-  packetId: string,
-) => {
-  await setConfigValues({ packet_id: packetId })
+export const pushSellersPacket = async (data: any, packetId: string) => {
+  const config = await getTartleAppConfig()
+
+  if (!config.token) {
+    throw new Error('No token saved')
+  }
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_TARTLE_API_URI}/api/v5/packets/${packetId}/sellers_packets/push`,
     {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${config.token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ id: packetId, payload: data }),
@@ -35,13 +36,21 @@ export const pushSellersPacket = async (
     )
   }
 
+  setCookie('packet_id', packetId, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    // no expiration
+    maxAge: 0,
+    path: '/',
+  })
+
   return responseData
 }
 
 // Use a refresh_token to get a new tartle access token.
 export const refreshTartleToken = async () => {
   try {
-    const config = await getConfig()
+    const config = await getTartleAppConfig()
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_TARTLE_API_URI}/oauth/token`,
@@ -59,7 +68,7 @@ export const refreshTartleToken = async () => {
     )
 
     const responseData = await response.json()
-    await setConfigValues({
+    await saveTartleAppConfig({
       token: responseData.access_token,
       refresh_token: responseData.refresh_token,
     })

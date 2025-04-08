@@ -1,15 +1,17 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import TestAuthorizedApp from '@/components/TestAuthorizedApp'
-import { getConfig } from '@/actions/actions'
+import { getTartleAppConfig } from '@/actions/actions'
+import { getCookie } from 'cookies-next/server'
 
 export default async function Test() {
-  const config = await getConfig()
+  const config = await getTartleAppConfig()
+  const packetId = await getCookie('packet_id')
 
   return (
     <TestAuthorizedApp
       token={config.token}
       refreshToken={config.refresh_token}
-      initialPacketId={config.packet_id}
+      initialPacketId={packetId as string}
     />
   )
 }
