@@ -38,8 +38,6 @@ export const pushSellersPacket = async (data: any, packetId: string) => {
   cookieStore.set('packet_id', packetId, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    // no expiration
-    maxAge: 0,
     path: '/',
   })
 
