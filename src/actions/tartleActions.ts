@@ -1,6 +1,7 @@
 'use server'
 import { saveTartleAppConfig, getTartleAppConfig } from './actions'
 import { cookies } from 'next/headers'
+
 // Push data to a tartle packet on behalf of a user
 export const pushSellersPacket = async (data: any, packetId: string) => {
   const config = await getTartleAppConfig()
@@ -38,8 +39,6 @@ export const pushSellersPacket = async (data: any, packetId: string) => {
   cookieStore.set('packet_id', packetId, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    // no expiration
-    maxAge: 0,
     path: '/',
   })
 

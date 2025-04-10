@@ -38,7 +38,7 @@ export const useDataVaultButton = (
       client_id: clientId,
       code_challenge: '',
       redirect_uri: redirectUri,
-      scope: 'write',
+      scope: 'push_packet',
       state: '',
       code_challenge_method: 'S256',
       response_type: 'code',

@@ -65,10 +65,18 @@ export function Intro() {
       </p>
 
       <div className="mt-8 flex flex-wrap justify-center gap-x-1 gap-y-3 sm:gap-x-2 lg:justify-start">
-        <IconLink href="#" icon={BookIcon} className="flex-none">
+        <IconLink
+          href="https://tartle-co.github.io/devportal/datavault-connect"
+          icon={BookIcon}
+          className="flex-none"
+        >
           Documentation
         </IconLink>
-        <IconLink href="#" icon={GitHubIcon} className="flex-none">
+        <IconLink
+          href="https://github.com/Tartle-co"
+          icon={GitHubIcon}
+          className="flex-none"
+        >
           GitHub
         </IconLink>
       </div>
