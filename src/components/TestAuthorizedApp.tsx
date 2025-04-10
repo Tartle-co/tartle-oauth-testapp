@@ -96,7 +96,7 @@ const TestAuthorizedApp = ({
           </HighlightContainer>
         </div>
       </div>
-      <DataSync token={token} initialPacketId={initialPacketId} />
+      <DataSync initialPacketId={initialPacketId} />
     </>
   )
 }

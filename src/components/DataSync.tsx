@@ -5,13 +5,7 @@ import { useState } from 'react'
 import { useActionState } from 'react'
 import HighlightContainer from '@/components/HighlightContainer'
 
-const DataSync = ({
-  token,
-  initialPacketId,
-}: {
-  token: string
-  initialPacketId: string
-}) => {
+const DataSync = ({ initialPacketId }: { initialPacketId: string }) => {
   const [state, formAction] = useActionState(syncTartleData, {
     success: true,
     message: '',
@@ -27,8 +21,6 @@ const DataSync = ({
     state: 'CA',
     zip: '12345',
   }
-
-  if (!token) return null
 
   const isIdle = state.message === ''
 
@@ -48,7 +40,6 @@ const DataSync = ({
             {JSON.stringify(isIdle ? data : state.message, null, 2)}
           </pre>
         </div>
-        <input type="hidden" name="token" value={token} />
         <input type="hidden" name="data" value={JSON.stringify(data)} />
         <div className="flex flex-col gap-2">
           <label htmlFor="packet_id">Packet ID</label>
