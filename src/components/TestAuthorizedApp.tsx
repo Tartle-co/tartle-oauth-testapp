@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode'
 import * as React from 'react'
 import DataSync from '@/components/DataSync'
 import { refreshTartleToken } from '@/actions/tartleActions'
+import HighlightContainer from '@/components/HighlightContainer'
 
 type TokenPayload = {
   sub: string
@@ -57,19 +58,19 @@ const TestAuthorizedApp = ({
       <div className="flex flex-col gap-4 text-gray-200">
         <div>
           Token:{' '}
-          <div className="mt-2 max-w-xl rounded-xl border-2 border-gray-500 bg-black p-4 break-words">
+          <HighlightContainer>
             <pre className="font-mono text-sm whitespace-pre-wrap">
               {JSON.stringify(token, null, 2)}
             </pre>
-          </div>
+          </HighlightContainer>
         </div>
         <div>
           Refresh Token:{' '}
-          <div className="mt-2 max-w-xl rounded-xl border-2 border-gray-500 bg-black p-4 break-words">
+          <HighlightContainer>
             <pre className="font-mono text-sm whitespace-pre-wrap">
               {refreshToken}
             </pre>
-          </div>
+          </HighlightContainer>
           <button
             className="mt-4 w-full cursor-pointer rounded-md bg-blue-500 p-2 text-white"
             onClick={handleRefreshToken}
@@ -88,11 +89,11 @@ const TestAuthorizedApp = ({
 
         <div>
           Decoded Token:{' '}
-          <div className="mt-2 max-w-xl rounded-xl border-2 border-gray-500 bg-black p-4 break-words">
+          <HighlightContainer>
             <pre className="font-mono text-sm whitespace-pre-wrap">
               {JSON.stringify(decodedToken, null, 2)}
             </pre>
-          </div>
+          </HighlightContainer>
         </div>
       </div>
       <DataSync token={token} initialPacketId={initialPacketId} />
