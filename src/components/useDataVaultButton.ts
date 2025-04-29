@@ -66,7 +66,7 @@ export const useDataVaultButton = (
         tartleBaseUrl,
       ).toString(),
     )
-  }, [authorizationParams])
+  }, [authorizationParams, tartleBaseUrl])
 
   return {
     dataVaultAuthorizationParams: authorizationParams,
