@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from 'react'
 import { generatePkcePair, generateSecureString } from '@/utils/pkce'
-import { setCookie, OptionsType } from 'cookies-next/client'
+import { saveOauthCookie } from '@/actions/actions'
 
 export type DataVaultAuthorizationParams = {
   client_id: string
@@ -48,9 +48,9 @@ export const useDataVaultButton = (
   useEffect(() => {
     const setupPkce = async () => {
       const { codeVerifier, codeChallenge } = await generatePkcePair()
-      setCookie('code_verifier', codeVerifier, cookieOptions)
+      await saveOauthCookie('code_verifier', codeVerifier)
       const state = generateSecureString(32)
-      setCookie('state', state, cookieOptions)
+      await saveOauthCookie('state', state)
       updateParams({
         code_challenge: codeChallenge,
         state,
@@ -73,11 +73,4 @@ export const useDataVaultButton = (
     isReady: authorizationParams.code_challenge !== '',
     dataVaultUrl: url,
   }
-}
-
-const cookieOptions: OptionsType = {
-  path: '/',
-  maxAge: 60 * 60, // 1 hour
-  sameSite: 'lax',
-  secure: process.env.NODE_ENV === 'production',
 }
