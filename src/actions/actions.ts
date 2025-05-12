@@ -2,7 +2,7 @@
 import { Settings } from '@/types/common'
 import { neon } from '@neondatabase/serverless'
 import { getId } from '@/utils/fingerprint'
-
+import { cookies } from 'next/headers'
 const sql = neon(process.env.POSTGRES_URL!)
 
 const resetQuery = `
@@ -58,4 +58,14 @@ export const getTartleAppConfig = async () => {
   }
 
   return result[0]
+}
+
+export const saveOauthCookie = async (key: string, value: string) => {
+  const cookieStore = await cookies()
+  cookieStore.set(key, value, {
+    maxAge: 60 * 60, // 1 hour
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+  })
 }
